@@ -45,7 +45,7 @@
                 <label for="payment-method">Metode Pembayaran</label>
                 <select id="payment-method" name="payment_method" required>
                     <option value="cash">Cash</option>
-                    <option value="midtrans">Midtrans</option>
+                    <option value="midtrans">Transfer/QRIS</option>
                 </select>
 
                 <button type="submit" class="submit-button">Bayar</button>

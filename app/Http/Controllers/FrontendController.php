@@ -145,22 +145,6 @@ class FrontendController extends Controller
 
     public function success(Request $request)
     {
-        // // Validate the incoming request
-        // $request->validate([
-        //     'username' => 'required|string|exists:users,username',
-        //     'order_id' => 'required|string',
-        // ]);
-
-        // // Fetch the store (user) and associated transaction
-        // $store = User::with(['transactions' => function ($query) use ($request) {
-        //     $query->where('code', $request->order_id);
-        // }])->where('username', $request->username)->first();
-
-        // // Check if the transaction exists
-        // $transaction = $store->transactions->first();
-        // if (!$transaction) {
-        //     abort(404, 'Transaction not found');
-        // }
 
         $transaction = Transaction::where('code', $request->order_id)->first();
         $store = User::where('id', $transaction->user_id)->first();
