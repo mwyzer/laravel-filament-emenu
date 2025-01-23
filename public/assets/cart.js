@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="cart-item-details">
                     <h2>${item.name}</h2>
                     <p>Rp ${Number(item.price).toLocaleString('id-ID', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</p>
-                    <textarea class="note-field" placeholder="Write note ..." data-index="${index}">${item.note || ''}</textarea>
+                    <textarea class="note-field" placeholder=" note ..." data-index="${index}">${item.note || ''}</textarea>
                     <div class="quantity-control">
                         <button class="quantity-btn decrease" data-index="${index}">-</button>
                         <span>${item.quantity}</span>

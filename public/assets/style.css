@@ -5,46 +5,38 @@
     padding: 0;
     box-sizing: border-box;
 }
-
 body {
     background-color: #f6fff2;
     color: #333;
 }
-
 .container {
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
 }
-
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
 }
-
 .profile {
     display: flex;
     align-items: center;
 }
-
 .profile-image {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
 }
-
 .store-name {
     font-size: 18px;
     font-weight: bold;
 }
-
 .language-switch {
     display: flex;
 }
-
 .lang-button {
     background: #fff;
     border: 1px solid #ccc;
@@ -53,25 +45,21 @@ body {
     margin-left: 5px;
     cursor: pointer;
 }
-
 .lang-button.active {
     background: #006400;
     color: #fff;
     border-color: #006400;
 }
-
 .search-bar {
     display: flex;
     margin-bottom: 20px;
 }
-
 .search-input {
     flex: 1;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
-
 .search-button {
     background: #fff;
     border: 1px solid #ccc;
@@ -80,35 +68,29 @@ body {
     margin-left: 10px;
     cursor: pointer;
 }
-
 .menu-category {
     margin-bottom: 20px;
 }
-
 .category-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
 }
-
 .category-title {
     font-size: 20px;
     font-weight: bold;
 }
-
 .see-all {
     font-size: 14px;
     text-decoration: none;
     color: #006400;
 }
-
 .category-tabs {
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
 }
-
 .category-tab {
     font-size: 14px;
     color: #333;
@@ -122,49 +104,40 @@ body {
     cursor: pointer;
     text-decoration: none;
 }
-
 .category-tab p {
     white-space: nowrap;
 }
-
 .category-tab.active {
     background: #006400;
     color: #fff;
     border-color: #006400;
 }
-
 .category-tab img {
     width: 20px;
     height: 20px;
     margin-right: 5px;
 }
-
 .menu-items {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 20px;
 }
-
 .no-menu-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-
 .no-menu-wrapper #lottie {
     width: 200px;
     height: 200px;
 }
-
 .no-menu {
     text-align: center;
     font-size: 18px;
     font-weight: bold;
     color: #006400;
 }
-
-
 .menu-card {
     background: #fff;
     border: 1px solid #ccc;
@@ -172,7 +145,6 @@ body {
     padding: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
 .menu-image {
     width: 100%;
     height: 150px;
@@ -180,22 +152,18 @@ body {
     object-fit: cover;
     margin-bottom: 10px;
 }
-
 .menu-name {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 5px;
 }
-
 .menu-description {
     display: none;
 }
-
 .menu-price {
     font-size: 14px;
     color: #006400;
 }
-
 .cart {
     position: fixed;
     bottom: 20px;
@@ -210,12 +178,10 @@ body {
     cursor: pointer;
     text-decoration: none;
 }
-
 .cart i {
     color: #006400;
     font-size: 16px;
 }
-
 .cart-count {
     position: absolute;
     top: -5px;
@@ -231,8 +197,6 @@ body {
     font-size: 12px;
     font-weight: bold;
 }
-
-
 .modal {
     position: fixed;
     top: 0;
@@ -244,11 +208,9 @@ body {
     justify-content: center;
     align-items: center;
 }
-
 .modal.hidden {
     display: none;
 }
-
 .modal-content {
     background: white;
     border-radius: 10px;
@@ -257,7 +219,6 @@ body {
     max-width: 500px;
     position: relative;
 }
-
 .close-modal {
     position: absolute;
     top: 8px;
@@ -267,20 +228,17 @@ body {
     font-size: 24px;
     cursor: pointer;
 }
-
 .modal-image {
     width: 100%;
     height: 200px;
     border-radius: 10px;
     object-fit: cover;
 }
-
 .modal-name,
 .modal-price,
 .modal-description {
     margin: 10px 0;
 }
-
 .modal-note {
     display: flex;
     width: 100%;
@@ -292,14 +250,12 @@ body {
     margin-bottom: 10px;
     padding: 10px;
 }
-
 .quantity-control {
     display: flex;
     align-items: center;
     gap: 10px;
     margin-bottom: 10px;
 }
-
 .quantity-btn {
     background: #e0e0e0;
     border: none;
@@ -308,7 +264,6 @@ body {
     cursor: pointer;
     border-radius: 5px;
 }
-
 .add-to-cart-btn {
     background: #28a745;
     color: white;
@@ -318,3 +273,4 @@ body {
     cursor: pointer;
     width: 100%;
 }
+‎public/assets/success.css
