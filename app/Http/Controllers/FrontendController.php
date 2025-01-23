@@ -5,30 +5,52 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\ProductCategory;
 use App\Models\Transaction;
+use Illuminate\Support\Facades\Log;
 
 class FrontendController extends Controller
 {
     //
-    public function index(Request $request)
+    public function index(Request $request, $username = null)
     {
-        $store = User::where('username', $request->username)->first();
-
+        // Find the store by username from URL
+        $store = $username ? User::where('username', $username)->firstOrFail() : null;
+    
+        // Abort if the store is not found
         if (!$store) {
-            abort(404);
+            abort(404, 'Store not found');
         }
-
-        $categories = $store->productCategories;
-
-        $products = Product::where('user_id', $store->id)->get();
-
-        if (isset($request->search)) {
-            $products = $products->where('name', 'like', '%' . $request->search . '%');
+    
+        // Get product categories for the store
+        $categories = ProductCategory::where('user_id', $store->id)->get();
+    
+        // Start query for products belonging to the store
+        $productsQuery = Product::where('user_id', $store->id);
+    
+        // Apply search filter if 'search' parameter is present
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $productsQuery->where('name', 'like', '%' . $search . '%');
+            Log::info('Search filter applied:', ['search' => $search]);
         }
-
-        return view('index', compact('store', 'categories', 'products'));
+    
+        // Apply category filter if 'category' parameter is present
+        if ($request->filled('category')) {
+            $categoryId = $request->category;
+            $productsQuery->where('product_category_id', $categoryId);
+            Log::info('Category filter applied:', ['category_id' => $categoryId]);
+        }
+    
+        // Execute the query to get the products
+        $products = $productsQuery->get();
+    
+        // Log the filtered products for debugging
+        Log::info('Filtered Products:', ['products' => $products->toArray()]);
+    
+        // Send data to the view
+        return view('store.products', compact('store', 'categories', 'products'));
     }
-
     public function cart(Request $request)
     {
         $store = User::where('username', $request->username)->first();
@@ -90,8 +112,7 @@ class FrontendController extends Controller
 
         if ($request->payment_method == 'cash') {
             return redirect()->route('success', ['username' => $store->username, 'order_id' => $transaction->code]);
-        } else
-        {
+        } else {
             //Set your Merchant Server Key
             \Midtrans\Config::$serverKey = config('midtrans.serverKey');
 
@@ -114,7 +135,7 @@ class FrontendController extends Controller
                     'phone' => $store->phone,
                 ],
             ];
-            
+
             $paymentUrl = \Midtrans\Snap::createTransaction($params)->redirect_url;
 
             return redirect($paymentUrl);
@@ -123,21 +144,24 @@ class FrontendController extends Controller
 
     public function success(Request $request)
     {
-        $transaction = Transaction::where('code', $request->order_id)->first();
-        $store = User::where('username', $request->username)->first();
-
-        if (!$store) {
-            abort(404);
+        // Validate the incoming request
+        $request->validate([
+            'username' => 'required|string|exists:users,username',
+            'order_id' => 'required|string',
+        ]);
+    
+        // Fetch the store (user) and associated transaction
+        $store = User::with(['transactions' => function ($query) use ($request) {
+            $query->where('code', $request->order_id);
+        }])->where('username', $request->username)->first();
+    
+        // Check if the transaction exists
+        $transaction = $store->transactions->first();
+        if (!$transaction) {
+            abort(404, 'Transaction not found');
         }
-
-        $order = $store->transactions()->where('code', $request->order_id)->first();
-
-        if (!$order) {
-            abort(404);
-        }
-
-
-
+    
+        // Pass store and transaction data to the view
         return view('success', compact('store', 'transaction'));
     }
 }

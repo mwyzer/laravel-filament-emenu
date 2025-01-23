@@ -24,7 +24,7 @@
 
         <form action="{{ route('index', $store->username) }}" class="search-bar">
             <input type="hidden" name="category" value="{{ request('category') }}">
-            <input type="text" class="search-input" placeholder="Cari menu..." value="{{ request('search') }}"
+            <input type="text" class="search-input" placeholder="Cari voucher..." value="{{ request('search') }}"
                 name="search">
             <button class="search-button">
                 <i class="fa-solid  fa-magnifying-glass"></i>
@@ -35,29 +35,35 @@
             <div class="category-header">
                 <h2 class="category-title">Kategori</h2>
             </div>
-            <div class="category-tabs">
-                <a href="" class="category-tab active">
-                    <p>All</p>
-                </a>
-                @if ($categories->isNotEmpty())
-                    @foreach ($categories as $category)
-                        <a class="category-tab" href="{{ url('?category=' . $category->id) }}">
-                            <p>{{ $category->name }}</p>
-                        </a>
-                    @endforeach
-                @else
-                    <p class="no-categories">Kategori tidak ditemukan.</p>
-                @endif
-
+            <div class="category-tabs-wrapper">
+                <div class="category-tabs">
+                    <!-- Tab "All" -->
+                    <a href="{{ url('/{{username}}') }}" class="category-tab {{ request('category') ? '' : 'active' }}">
+                        <p>All</p>
+                    </a>
+        
+                    <!-- Tab untuk kategori dinamis -->
+                    @if ($categories->isNotEmpty())
+                        @foreach ($categories as $category)
+                            <a 
+                                href="{{ url('/{username}?category=' . $category->id) }}" 
+                                class="category-tab {{ request('category') == $category->id ? 'active' : '' }}">
+                                <p>{{ $category->name }}</p>
+                            </a>
+                        @endforeach
+                    @else
+                        <p class="no-categories">Kategori tidak ditemukan.</p>
+                    @endif
+                </div>
             </div>
         </section>
+        
 
         <section class="menu-items">
             @forelse ($products as $product)
                 <div class="menu-card" data-id="{{ $product->id }}" data-name="{{ $product->name }}"
                     data-price="{{ $product->price }}" data-description="{{ $product->description }}">
-                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
-                        class="menu-image">
+                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="menu-image">
                     <h3 class="menu-name">{{ $product->name }}</h3>
                     <p class="menu-price">Rp {{ number_format($product->price) }}</p>
                 </div>
@@ -67,8 +73,6 @@
                     <p class="no-menu">Ga ada barang yang cocok dengan pencarianmu.</p>
                 </div>
             @endforelse
-
-
         </section>
 
         <a href="{{ route('cart', $store->username) }}" class="cart">
