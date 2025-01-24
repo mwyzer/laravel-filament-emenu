@@ -20,6 +20,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class SubscriptionResource extends Resource
 {
@@ -27,15 +28,21 @@ class SubscriptionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-banknotes';
 
+    // this function for hide/unhide sidebar each roles, eg admin, csp
+    public static function canViewAny(): bool
+    {
+        return in_array(Auth::user()->role, ['admin', 'csp', 'marketing', 'finance', 'sales']);
+    }
+
     public static function getEloquentQuery(): Builder
     {
         $user = Auth::user(); // Get the authenticated user
-    
+
         // If the user is an admin, allow them to see all records
         if ($user && $user->role === 'admin') {
             return parent::getEloquentQuery();
         }
-    
+
         // Restrict other users to their own records
         return parent::getEloquentQuery()->where('user_id', $user?->id);
     }
@@ -79,20 +86,20 @@ class SubscriptionResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('user.name')
-                ->label('Nama Toko')
-                ->hidden(fn() => Auth::user()->role === 'store'),
-            TextColumn::make('created_at')
-                ->dateTime()
-                ->label('Tanggal Mulai'),
-            TextColumn::make('end_date')
-                ->dateTime()
-                ->label('Tanggal Berakhir'),
-            ImageColumn::make('subscriptionPayment.proof')
-                ->label('Bukti Transfer')
-                ->hidden(fn() => Auth::user()->role === 'store'),
-            TextColumn::make('subscriptionPayment.status')
-                ->label('Status Pembayaran')
-                ->hidden(fn() => Auth::user()->role === 'store'),
+                    ->label('Nama Toko')
+                    ->hidden(fn() => Auth::user()->role === 'store'),
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->label('Tanggal Mulai'),
+                TextColumn::make('end_date')
+                    ->dateTime()
+                    ->label('Tanggal Berakhir'),
+                ImageColumn::make('subscriptionPayment.proof')
+                    ->label('Bukti Transfer')
+                    ->hidden(fn() => Auth::user()->role === 'store'),
+                TextColumn::make('subscriptionPayment.status')
+                    ->label('Status Pembayaran')
+                    ->hidden(fn() => Auth::user()->role === 'store'),
             ])
             ->filters([
                 //

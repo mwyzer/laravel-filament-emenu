@@ -23,6 +23,7 @@ use Filament\Tables\Actions\DeleteBulkAction as ActionsDeleteBulkAction;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
 
 class ProductResource extends Resource
@@ -34,6 +35,12 @@ class ProductResource extends Resource
     protected static ?string $navigationLabel = 'Manajemen Produk';
 
     protected static ?string $navigationGroup = 'Manajemen Menu';
+
+    // this function for hide/unhide sidebar each roles, eg admin, csp
+    public static function canViewAny(): bool
+    {
+        return in_array(Auth::user()->role, ['admin', 'store']);
+    }
 
     public static function getEloquentQuery(): Builder
     {
@@ -51,21 +58,21 @@ class ProductResource extends Resource
         if (Auth::user()->role === 'admin') {
             return true;
         }
-    
+
         // Fetch the active subscription for the current user
         $subscription = Subscription::where('user_id', Auth::id())
             ->where('end_date', '>', now())
             ->where('is_active', true)
             ->latest()
             ->first();
-    
+
         // Count the number of products for the current user
         $countProduct = Product::where('user_id', Auth::id())->count();
-    
+
         // Allow creation if the product count is less than 2 or the user has an active subscription
         return !($countProduct >= 5 && !$subscription);
     }
-    
+
 
     public static function form(Form $form): Form
     {
@@ -85,12 +92,27 @@ class ProductResource extends Resource
                         return ProductCategory::where('user_id', $userId)->pluck('name', 'id');
                     }),
                 FileUpload::make('image')
-                    ->label('Foto Menu')
+                    ->label('Foto Produk')
                     ->image()
                     ->required(),
                 TextInput::make('name')
                     ->label('Nama Produk')
-                    ->required(),
+                    ->required()
+                    ->afterStateUpdated(function ($state, $set, $get) {
+                        $slug = Str::slug($state);
+                        $originalSlug = $slug;
+                        $counter = 1;
+    
+                        // Ensure uniqueness
+                        while (Product::where('slug', $slug)
+                            ->when($get('recordId'), fn($query) => $query->where('id', '!=', $get('recordId')))
+                            ->exists()) {
+                            $slug = "{$originalSlug}-{$counter}";
+                            $counter++;
+                        }
+    
+                        $set('slug', $slug);
+                    }),
                 Textarea::make('description')
                     ->label('Deskripsi Produk')
                     ->required(),
@@ -114,7 +136,7 @@ class ProductResource extends Resource
                 ImageColumn::make('image')
                     ->label('Foto Barang'),
                 TextColumn::make('price')
-                    ->label('Harga Menu')
+                    ->label('Harga Produk')
                     ->formatStateUsing(fn($state) => 'Rp ' . number_format($state, 0, ',', '.')),
             ])
             ->filters([
@@ -126,8 +148,8 @@ class ProductResource extends Resource
                     ->label('Kategori Produk')
                     ->options(function () {
                         $user = Auth::user();
-                        $query = $user->role === 'admin' 
-                            ? ProductCategory::query() 
+                        $query = $user->role === 'admin'
+                            ? ProductCategory::query()
                             : ProductCategory::where('user_id', $user->id);
                         return $query->pluck('name', 'id');
                     }),

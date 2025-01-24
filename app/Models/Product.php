@@ -45,6 +45,30 @@ class Product extends Model
         });
     }
 
+        /**
+     * Generate a unique slug for the product
+     *
+     * @param string $name
+     * @param int|null $excludeId
+     * @return string
+     */
+    // protected static function generateUniqueSlug($name, $excludeId = null)
+    // {
+    //     $slug = Str::slug($name);
+    //     $originalSlug = $slug;
+    //     $counter = 1;
+
+    //     // Check if the slug already exists
+    //     while (self::where('slug', $slug)
+    //         ->when($excludeId, fn($query) => $query->where('id', '!=', $excludeId))
+    //         ->exists()) {
+    //         $slug = "{$originalSlug}-{$counter}";
+    //         $counter++;
+    //     }
+
+    //     return $slug;
+    // }
+
     // Relationship with User
     public function user()
     {

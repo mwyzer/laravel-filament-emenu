@@ -18,12 +18,14 @@ class UserResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user';
 
     protected static ?string $navigationLabel = 'Manajemen User';
-    
+
     protected static ?string $navigationGroup = 'Manajemen User';
 
+
+    // this function for hide/unhide sidebar each roles, eg admin, csp
     public static function canViewAny(): bool
     {
-        return in_array(Auth::user()->role, ['admin', 'csp']);
+        return in_array(Auth::user()->role, ['admin']);
     }
 
     public static function form(Form $form): Form
@@ -72,9 +74,9 @@ class UserResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('logo')
-                ->label('Logo Toko/Foto Profil'),
+                    ->label('Logo Toko/Foto Profil'),
                 // ->defaultImage('storage/images/default.png'),
-                Tables\Columns\TextColumn::make('name')->label('Nama Toko'),
+                Tables\Columns\TextColumn::make('name')->label('Nama Toko/Username'),
                 Tables\Columns\TextColumn::make('username')->label('Username'),
                 Tables\Columns\TextColumn::make('email')->label('Email'),
                 Tables\Columns\TextColumn::make('role')->label('Peran'),

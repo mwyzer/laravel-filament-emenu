@@ -17,6 +17,7 @@ use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class TransactionResource extends Resource
 {
@@ -26,12 +27,32 @@ class TransactionResource extends Resource
     protected static ?string $navigationLabel = 'Manajemen Transaksi';
     protected static ?string $navigationGroup = 'Manajemen Transaksi';
 
+    // this function for hide/unhide sidebar each roles, eg admin, csp
+    public static function canViewAny(): bool
+    {
+        return in_array(Auth::user()->role, ['admin', 'csp', 'marketing', 'finance', 'store']);
+    }
+
+    public static function canDelete($record = null): bool
+    {
+        return Auth::user()->role === 'admin';
+    }
+
+
     public static function getEloquentQuery(): Builder
     {
         $user = Auth::user();
 
         if ($user->role === 'admin') {
             return parent::getEloquentQuery();
+        }
+
+        if ($user->role === 'csp') {
+            return parent::getEloquentQuery()->where('payment_method', 'transfer');
+        }
+
+        if ($user->role === 'marketing') {
+            return parent::getEloquentQuery()->where('payment_method', 'cash');
         }
 
         return parent::getEloquentQuery()->where('user_id', $user->id);
@@ -142,17 +163,19 @@ class TransactionResource extends Resource
             ->filters([
                 // Add table filters if needed
                 SelectFilter::make('user')
-                ->relationship('user', 'name')
-                ->label('Nama Toko')
-                ->hidden(fn() => Auth::user()->role === 'store'),
+                    ->relationship('user', 'name')
+                    ->label('Nama Toko')
+                    ->hidden(fn() => Auth::user()->role === 'store'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->visible(fn($record) => self::canDelete($record)),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\DeleteBulkAction::make()
+                    ->visible(fn() => Auth::user()->role === 'admin'),
             ]);
     }
 

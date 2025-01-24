@@ -28,19 +28,25 @@ class ProductCategoryResource extends Resource
 
     protected static ?string $navigationGroup = 'Manajemen Menu';
 
+    // this function for hide/unhide sidebar each roles, eg admin, csp
+    public static function canViewAny(): bool
+    {
+        return in_array(Auth::user()->role, ['admin', 'store']);
+    }
+
     public static function getEloquentQuery(): Builder
     {
         $user = Auth::user(); // Get the authenticated user
-    
+
         // If the user is an admin, allow them to see all records
         if ($user && $user->role === 'admin') {
             return parent::getEloquentQuery();
         }
-    
+
         // Restrict other users to their own records
         return parent::getEloquentQuery()->where('user_id', $user?->id);
     }
-    
+
 
     public static function form(Form $form): Form
     {
@@ -63,17 +69,17 @@ class ProductCategoryResource extends Resource
             ->columns([
                 //
                 TextColumn::make('user.name')
-                ->label('Nama Toko')
-                ->hidden(fn() => Auth::user()->role === 'store'),
+                    ->label('Nama Toko')
+                    ->hidden(fn() => Auth::user()->role === 'store'),
                 TextColumn::make('name')
-                ->label('Nama Kategori')
+                    ->label('Nama Kategori')
             ])
             ->filters([
                 //
                 SelectFilter::make('user')
-                ->relationship('user', 'name')
-                ->label('Nama Toko')
-                ->hidden(fn() => Auth::user()->role === 'store'),
+                    ->relationship('user', 'name')
+                    ->label('Nama Toko')
+                    ->hidden(fn() => Auth::user()->role === 'store'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
