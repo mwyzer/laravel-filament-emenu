@@ -24,10 +24,6 @@ class FrontendController extends Controller
 
         $categories = $store->productCategories;
 
-
-        // // Get product categories for the store
-        // $categories = ProductCategory::where('user_id', $store->id)->get();
-
         // // Start query for products belonging to the store
         $products = Product::where('user_id', $store->id);
 
@@ -36,17 +32,8 @@ class FrontendController extends Controller
             $products = $products->where('name', 'like', '%' . $request->search . '%');
         }
 
-        // Apply category filter if 'category' parameter is present
-        //todo: fix this
-        // if ($request->filled('category')) {
-        //     $products->where('category_id', $request->category);
-        // }
-
         // // Execute the query to get the products
         $products = $products->get();
-
-        // // Log the filtered products for debugging
-        // Log::info('Filtered Products:', ['products' => $products->toArray()]);
 
         // Send data to the view
         return view('index',compact('store','categories','products'));

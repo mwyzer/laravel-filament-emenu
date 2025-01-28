@@ -10,6 +10,7 @@
 
     <link rel="stylesheet" href="{{ asset('assets/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
 </head>
 
 <body>
@@ -64,7 +65,7 @@
             @empty
                 <div class="no-menu-wrapper">
                     <div id="lottie"></div>
-                    <p class="no-menu">Ga ada menu yang cocok dengan pencarianmu.</p>
+                    <p class="no-menu">Ga ada produk yang cocok dengan pencarianmu.</p>
                 </div>
             @endforelse
 
@@ -138,41 +139,75 @@
             }
         });
 
+        document.getElementById('add-to-cart').addEventListener('click', function() {
+            const whatsappField = document.getElementById('modal-note');
+            const quantityField = document.getElementById('quantity');
 
-        //validation form in modal-content
-        document.getElementById('add-to-cart').addEventListener('click', function () {
-        const whatsappField = document.getElementById('modal-note');
-        const quantityField = document.getElementById('quantity');
-        
-        const whatsappValue = whatsappField.value.trim();
-        const quantityValue = parseInt(quantityField.textContent, 10);
+            const whatsappValue = whatsappField.value.trim();
+            const quantityValue = parseInt(quantityField.textContent);
 
-        let validationErrors = [];
+            // Regular expression to validate WhatsApp numbers (adjust based on your region's requirements)
+            const whatsappRegex = /^[0-9]{10,15}$/;
 
-        // Validate WhatsApp Number
-        const whatsappRegex = /^[+]?[\d\s-]{10,}$/; // Matches WhatsApp-like numbers
-        if (!whatsappValue || !whatsappRegex.test(whatsappValue)) {
-            validationErrors.push("Nomor WhatsApp harus diisi dengan format yang valid (minimal 10 karakter).");
+            if (!whatsappValue || !whatsappRegex.test(whatsappValue)) {
+                alert("Masukkan nomor WhatsApp yang valid (10-15 digit).");
+                return;
+            }
+
+            if (quantityValue < 1) {
+                alert("Jumlah produk harus minimal 1.");
+                return;
+            }
+
+            // If validation passes, proceed to add the item to the cart
+            const productId = document.querySelector('.modal').getAttribute('data-id');
+            const productName = document.getElementById('modal-name').textContent;
+            const productPrice = parseFloat(document.getElementById('modal-price').textContent.replace(/[^0-9.-]+/g,
+                ''));
+            const productImage = document.getElementById('modal-image').getAttribute('src');
+
+            const cartItem = {
+                id: productId,
+                name: productName,
+                price: productPrice,
+                quantity: quantityValue,
+                whatsapp: whatsappValue,
+                image: productImage
+            };
+
+            addToCart(cartItem);
+            alert("Produk berhasil ditambahkan ke keranjang.");
+            // Optionally close the modal
+            document.querySelector('.modal').classList.add('hidden');
+        });
+
+        // Function to add an item to the cart
+        function addToCart(item) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existingItemIndex = cart.findIndex(cartItem => cartItem.id === item.id);
+
+            if (existingItemIndex !== -1) {
+                // Update quantity if item already exists
+                cart[existingItemIndex].quantity += item.quantity;
+            } else {
+                // Add new item
+                cart.push(item);
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
         }
 
-        // Validate Quantity
-        if (isNaN(quantityValue) || quantityValue < 1) {
-            validationErrors.push("Jumlah produk harus minimal 1.");
+        // Function to update cart count in the UI
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalCount = cart.reduce((acc, item) => acc + item.quantity, 0);
+            document.querySelector('.cart-count').textContent = totalCount;
         }
 
-        // Show errors or proceed to add the product to the cart
-        if (validationErrors.length > 0) {
-            alert(validationErrors.join("\n")); // Show errors as an alert
-            return; // Prevent adding to cart
-        }
-
-        // If validation passes, add the product to the cart
-        alert('Produk berhasil ditambahkan ke keranjang!');
-
-        // You can add further logic here to handle the actual "add to cart" functionality
-    });
+        // Call this on page load to update the cart count
+        updateCartCount();
     </script>
-
 
 </body>
 

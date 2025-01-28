@@ -1,122 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>WiFi Voucher</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100">
 
-    <!-- Header Section -->
-    <div class="bg-blue-500 text-white p-4 rounded-b-lg relative">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <img src="https://via.placeholder.com/50" alt="Profile" class="rounded-full w-12 h-12">
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4">
+
+        <!-- Header Section -->
+        <header class="flex items-center justify-between py-4">
+            <div class="flex items-center space-x-4">
+                <img src="profile.jpg" alt="Profile" class="w-12 h-12 rounded-full">
                 <div>
-                    <h1 class="text-lg font-bold">Davriel Wija Grazio</h1>
-                    <p class="text-sm">Member <span class="font-semibold">Silver</span></p>
+                    <h1 class="text-lg font-semibold">John Doe</h1>
+                    <p class="text-sm text-gray-600">Member Status: <span class="text-green-500">Premium</span></p>
                 </div>
             </div>
-            <div class="absolute top-4 right-4">
+            <div class="flex space-x-4">
                 <button class="relative">
-                    <span class="text-xl"><i class="fas fa-bell"></i></span>
-                    <span class="absolute top-0 right-0 bg-red-500 text-xs text-white rounded-full px-1">1</span>
+                    <span
+                        class="absolute top-0 right-0 inline-flex items-center justify-center w-4 h-4 text-xs font-bold text-white bg-red-500 rounded-full">3</span>
+                    <i class="fas fa-bell text-gray-700 text-xl"></i>
                 </button>
             </div>
-        </div>
-        <div class="text-center mt-4">
-            <h2 class="text-lg">Saldo Anda</h2>
-            <h1 class="text-2xl font-bold">Rp 350.000</h1>
-            <button class="bg-white text-blue-500 px-4 py-1 rounded-lg mt-2">Top Up</button>
-            <p class="mt-2">20 Points</p>
-        </div>
-    </div>
+        </header>
 
-    <!-- Navigation Section -->
-    <div class="grid grid-cols-4 text-center gap-2 my-4 px-4">
-        <button class="bg-white p-3 rounded-lg shadow">Voucher WiFi</button>
-        <button class="bg-white p-3 rounded-lg shadow">Tukar Poin</button>
-        <button class="bg-white p-3 rounded-lg shadow">Mitra Wilzio</button>
-        <button class="bg-white p-3 rounded-lg shadow">Referral</button>
-    </div>
-
-    <!-- Banner Section -->
-    <div class="px-4">
-        <div class="overflow-hidden rounded-lg relative">
-            <div class="flex transition-transform ease-in-out duration-300">
-                <img src="https://via.placeholder.com/600x200" alt="Banner 1" class="w-full">
-                <img src="https://via.placeholder.com/600x200" alt="Banner 2" class="w-full">
+        <!-- Balance and Actions Section -->
+        <section class="bg-white rounded-lg shadow p-4 mb-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-sm text-gray-600">Balance</h2>
+                    <p class="text-2xl font-semibold text-gray-800">Rp 500,000</p>
+                </div>
+                <button class="bg-blue-500 text-white px-4 py-2 rounded-lg">Top-Up</button>
             </div>
-        </div>
+        </section>
+
+        <!-- Menu Section -->
+        <section class="grid grid-cols-4 gap-4 text-center mb-6">
+            <div class="bg-white p-4 rounded-lg shadow">
+                <i class="fas fa-ticket-alt text-blue-500 text-2xl"></i>
+                <p class="mt-2 text-sm font-semibold">Voucher</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+                <i class="fas fa-star text-yellow-500 text-2xl"></i>
+                <p class="mt-2 text-sm font-semibold">Points</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+                <i class="fas fa-handshake text-green-500 text-2xl"></i>
+                <p class="mt-2 text-sm font-semibold">Partners</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+                <i class="fas fa-users text-purple-500 text-2xl"></i>
+                <p class="mt-2 text-sm font-semibold">Referrals</p>
+            </div>
+        </section>
+
+        <!-- Banner Section -->
+        <section class="mb-6">
+            <div class="relative bg-blue-500 rounded-lg p-6 text-white">
+                <h2 class="text-lg font-semibold">Special Discount!</h2>
+                <p>Get up to 50% off on selected items</p>
+                <img src="banner.jpg" alt="Banner"
+                    class="absolute top-0 right-0 w-1/3 h-full object-cover rounded-lg">
+            </div>
+        </section>
+
+        <!-- Flash Sale Section -->
+        <section class="mb-6">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-semibold">Flash Sale</h2>
+                <span class="text-sm text-gray-600">Ends in: <span class="text-red-500">02:30:45</span></span>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <img src="item1.jpg" alt="Flash Sale Item" class="w-full h-24 object-cover rounded-lg mb-2">
+                    <h3 class="text-sm font-semibold">Item Name</h3>
+                    <p class="text-red-500 text-sm">Rp 100,000</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <img src="item2.jpg" alt="Flash Sale Item" class="w-full h-24 object-cover rounded-lg mb-2">
+                    <h3 class="text-sm font-semibold">Item Name</h3>
+                    <p class="text-red-500 text-sm">Rp 150,000</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Voucher List Section -->
+        <section class="mb-6">
+            <h2 class="text-lg font-semibold mb-4">Your Vouchers</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h3 class="text-sm font-semibold">10% Off</h3>
+                    <p class="text-gray-600 text-xs">Valid until 31 Dec 2025</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h3 class="text-sm font-semibold">Free Shipping</h3>
+                    <p class="text-gray-600 text-xs">Valid until 31 Jan 2026</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <nav class="fixed bottom-0 left-0 right-0 bg-white shadow p-4 flex justify-between">
+            <a href="#" class="flex flex-col items-center text-gray-700">
+                <i class="fas fa-home text-xl"></i>
+                <span class="text-sm">Beranda</span>
+            </a>
+            <a href="#" class="flex flex-col items-center text-gray-700">
+                <i class="fas fa-shopping-cart text-xl"></i>
+                <span class="text-sm">Keranjang</span>
+            </a>
+            <a href="#" class="flex flex-col items-center text-gray-700">
+                <i class="fas fa-exchange-alt text-xl"></i>
+                <span class="text-sm">Transaksi</span>
+            </a>
+            <a href="#" class="flex flex-col items-center text-gray-700">
+                <i class="fas fa-cog text-xl"></i>
+                <span class="text-sm">Pengaturan</span>
+            </a>
+        </nav>
     </div>
 
-    <!-- Flash Sale Section -->
-    <div class="px-4 mt-6">
-        <div class="flex justify-between items-center">
-            <h2 class="font-bold text-lg">FLASH SALE</h2>
-            <p class="text-red-500 font-semibold">00:30:59</p>
-        </div>
-        <div class="flex overflow-x-auto space-x-4 mt-4">
-            <div class="bg-white rounded-lg shadow p-4 w-60 flex-none">
-                <h3 class="font-bold">Unlimited</h3>
-                <p>30 Hari</p>
-                <p class="text-red-500 text-lg">Rp 200.000</p>
-                <button class="bg-blue-500 text-white px-4 py-1 rounded-lg mt-2">Beli Sekarang</button>
-            </div>
-            <div class="bg-white rounded-lg shadow p-4 w-60 flex-none">
-                <h3 class="font-bold">25 GB</h3>
-                <p>30 Hari</p>
-                <p class="text-red-500 text-lg">Rp 150.000</p>
-                <button class="bg-blue-500 text-white px-4 py-1 rounded-lg mt-2">Beli Sekarang</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Voucher Section -->
-    <div class="px-4 mt-6">
-        <div class="flex justify-between items-center">
-            <h2 class="font-bold text-lg">Voucher WiFi</h2>
-            <button class="text-blue-500 text-sm">Lihat Semua</button>
-        </div>
-        <div class="flex overflow-x-auto space-x-4 mt-4">
-            <div class="bg-white rounded-lg shadow p-4 w-60 flex-none">
-                <h3 class="font-bold">20 GB</h3>
-                <p>25 Hari</p>
-                <p class="text-red-500 text-lg">Rp 20.000</p>
-                <button class="bg-blue-500 text-white px-4 py-1 rounded-lg mt-2">Beli Sekarang</button>
-            </div>
-            <div class="bg-white rounded-lg shadow p-4 w-60 flex-none">
-                <h3 class="font-bold">30 GB</h3>
-                <p>30 Hari</p>
-                <p class="text-red-500 text-lg">Rp 50.000</p>
-                <button class="bg-blue-500 text-white px-4 py-1 rounded-lg mt-2">Beli Sekarang</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bottom Navigation -->
-    <div class="fixed bottom-0 w-full bg-white border-t shadow-md">
-        <div class="flex justify-around py-2">
-            <button class="flex flex-col items-center text-blue-500">
-                <i class="fas fa-home text-lg"></i>
-                <span class="text-xs">Beranda</span>
-            </button>
-            <button class="flex flex-col items-center">
-                <i class="fas fa-shopping-cart text-lg"></i>
-                <span class="text-xs">Keranjang</span>
-            </button>
-            <button class="flex flex-col items-center">
-                <i class="fas fa-file-invoice text-lg"></i>
-                <span class="text-xs">Transaksi</span>
-            </button>
-            <button class="flex flex-col items-center">
-                <i class="fas fa-cog text-lg"></i>
-                <span class="text-xs">Pengaturan</span>
-            </button>
-        </div>
-    </div>
-
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js"></script>
 </body>
+
 </html>
