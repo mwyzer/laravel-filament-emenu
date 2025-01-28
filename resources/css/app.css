@@ -1,3 +1,179 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+button, input, select {
+    font-family: inherit;
+}
+
+/* Color Variables */
+:root {
+    --primary-color: #053FBA;
+    --secondary-color: #B0CBFF;
+    --text-color: #4D4D4D;
+    --bg-light: #FBFBFB;
+    --bg-dark: #303030;
+    --highlight-color: #FFD500;
+    --error-color: #FF0000;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Layout */
+.container {
+    position: relative;
+    width: 448px;
+    margin: auto;
+    background-color: var(--secondary-color);
+    overflow-x: hidden;
+}
+
+/* Header Styles */
+.header {
+    position: relative;
+    width: 100%;
+    height: 207px;
+    background: var(--primary-color);
+    border-radius: 0;
+}
+
+.header .switch {
+    position: absolute;
+    width: 45px;
+    height: 25px;
+    top: 21px;
+    right: 20px;
+    border-radius: 360px;
+    background: #DBDBDB;
+    box-shadow: 0px 0px 1px rgba(51, 51, 51, 0.8);
+}
+
+.header .icon {
+    width: 22.5px;
+    height: 22.5px;
+    background: #FFFFFF;
+    border-radius: 50%;
+}
+
+.header .title {
+    position: absolute;
+    top: 150px;
+    left: 24px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    color: var(--text-color);
+}
+
+/* Sidebar Styles */
+.sidebar {
+    position: absolute;
+    width: 60px;
+    height: calc(100% - 66px);
+    top: 0;
+    left: 0;
+    background: var(--bg-light);
+    box-shadow: 2px 0 5px var(--shadow-color);
+}
+
+/* Navigation Links */
+.nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 55px;
+    font-size: 13px;
+    text-align: center;
+    color: var(--text-color);
+}
+
+.nav-link.active {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+/* Main Content Styles */
+.main-content {
+    margin-left: 60px;
+    padding: 20px;
+    overflow-y: auto;
+    height: calc(100vh - 66px);
+    background: var(--bg-light);
+}
+
+.card {
+    background: var(--bg-light);
+    border-radius: 15px;
+    box-shadow: 0 2px 4px var(--shadow-color);
+    margin-bottom: 16px;
+    padding: 15px;
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+/* Buttons */
+.button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    color: #FBFBFB;
+    background: var(--primary-color);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.button:hover {
+    background: #002F8A;
+}
+
+/* Footer Styles */
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 66px;
+    background: var(--bg-light);
+    box-shadow: 0 -5px 30px var(--shadow-color);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 16px;
+}
+
+.footer .icon {
+    font-size: 24px;
+    color: var(--text-color);
+}
+
+.footer .icon.active {
+    color: var(--primary-color);
+}
+
+/* Utilities */
+.hidden {
+    display: none !important;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+.text-primary {
+    color: var(--primary-color);
+}
+
+.text-error {
+    color: var(--error-color);
+}
